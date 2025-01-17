@@ -25,6 +25,9 @@ endif(WIN32)
 # set(RTAUDIO_BUILD_STATIC_LIBS OFF CACHE INTERNAL "dont compile library static lib.")
 # set(RTAUDIO_TARGETNAME_UNINSTALL "uninstall_rtaudio" CACHE INTERNAL "uninstall rtaudio name" FORCE)
 
+set(RTMIDI_BUILD_TESTING OFF CACHE INTERNAL "RTMidi: Build without tests")
+set(RTMIDI_TARGETNAME_UNINSTALL "uninstall_rtmidi" CACHE INTERNAL "RTMidi: change uninstall target name" FORCE)
+
 add_subdirectory(rtmidi EXCLUDE_FROM_ALL)
 #avoid installing public headers on cmake >=3.14
 set_target_properties(rtmidi PROPERTIES PUBLIC_HEADER "")

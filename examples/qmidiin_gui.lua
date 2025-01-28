@@ -45,14 +45,17 @@ end)
 local m_in, m_out
 local function set_midi_out(api,port)
 	printLOG("opening midi out:", oAPIcombo:get_name(),oDevCombo:get_name(),"\n")
-	if m_out then m_out:close_port(); m_out:free() end
+	if m_out then m_out:close_port(); m_out:free(); m_out=nil end
+	if portname=="none" then return end
 	m_out = rtmidi.rtmidi_out(api)
 	m_out:open_port( port,"Mi input port" );
 	if m_out.ok == false then error(ffi.string(m_out.msg)) end
 end
 local function set_midi_in(api,port)
-	printLOG("opening midi in:", APIcombo:get_name(),DevCombo:get_name(),"\n")
-	if m_in then m_in:close_port(); m_in:free() end
+	local portname = DevCombo:get_name()
+	printLOG("opening midi in:", APIcombo:get_name(),portname,"\n")
+	if m_in then m_in:close_port(); m_in:free();m_in = nil end
+	if portname=="none" then return end
 	m_in = rtmidi.rtmidi_in(api)
 	m_in:open_port( port,"Mi input port" );
 	if m_in.ok == false then error(ffi.string(m_in.msg)) end

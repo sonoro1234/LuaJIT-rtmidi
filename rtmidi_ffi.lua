@@ -234,12 +234,14 @@ function M.GetAllInfo()
 		for j=1,nPorts do
 			I.API[api].ins[j] = ffi.string(m_in:get_port_name(j-1))
 		end
+		if nPorts == 0 then I.API[api].ins[1] = "none" end
 		m_in:free()
 		local m_out = rtmidi.rtmidi_out(api)
 		local nPorts = m_out:get_port_count();
 		for j=1,nPorts do
 			I.API[api].outs[j] = ffi.string(m_out:get_port_name(j-1))
 		end
+		if nPorts == 0 then I.API[api].outs[1] = "none" end
 		m_out:free()
 	end
 	return I

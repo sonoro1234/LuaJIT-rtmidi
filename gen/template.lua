@@ -105,6 +105,34 @@ function M.MakeMidiCallback(func, ...)
 	return cb:funcptr() , cb
 end
 
+function M.GetAllInfo()
+	local rtmidi = M
+	local I = {APInames={},APIdisplay_names={},API={},APIbyi={}}
+	local api_count = rtmidi.get_compiled_api(nil,0)
+	local apis_data = ffi.new("enum RtMidiApi[?]",api_count)
+	rtmidi.get_compiled_api(apis_data, api_count);
+	for i=1,api_count do
+		local api = tonumber(apis_data[i-1])
+		I.APInames[i] = ffi.string(rtmidi.api_name(api))
+		I.APIdisplay_names[i] = ffi.string(rtmidi.api_display_name(api))
+		I.APIbyi[i] = api
+		local m_in = rtmidi.rtmidi_in(api)
+		local nPorts = m_in:get_port_count();
+		I.API[api] = {ins={},outs={}}
+		for j=1,nPorts do
+			I.API[api].ins[j] = ffi.string(m_in:get_port_name(j-1))
+		end
+		m_in:free()
+		local m_out = rtmidi.rtmidi_out(api)
+		local nPorts = m_out:get_port_count();
+		for j=1,nPorts do
+			I.API[api].outs[j] = ffi.string(m_out:get_port_name(j-1))
+		end
+		m_out:free()
+	end
+	return I
+end
+
 
 setmetatable(M,{
 __index = function(t,k)

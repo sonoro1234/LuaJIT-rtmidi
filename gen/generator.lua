@@ -1,5 +1,5 @@
---package.path = package.path.."../../LuaJIT-ImGui/cimgui/generator/?.lua"
-package.path = package.path.."../../anima/LuaJIT-ImGui/cimgui/generator/?.lua"
+package.path = package.path.."../../LuaJIT-ImGui/cimgui/generator/?.lua"
+--package.path = package.path.."../../anima/LuaJIT-ImGui/cimgui/generator/?.lua"
 local cp2c = require"cpp2ffi"
 local parser = cp2c.Parser()
 

@@ -49,7 +49,7 @@ while true do
 	size[0] = 255
 	local stamp = m_in:in_get_message(msg, size)
 	if m_in.ok == false then error(ffi.string(m_in.msg)) end
-	for i=0,size[0]-1 do
+	for i=0,tonumber(size[0])-1 do
       io.write(string.format("Byte %d = %d, " ,i ,msg[i]))
 	end
 	if size[0] > 0 then io.write(string.format("stamp %f\n",stamp)) end
